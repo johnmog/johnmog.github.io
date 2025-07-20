@@ -182,6 +182,14 @@
             color: #666;
             line-height: 1.6;
             margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .event .download-btn {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            align-self: flex-start;
         }
 
         .category-workshop { border-left: 4px solid #e74c3c; }
@@ -308,12 +316,9 @@
     <header>
         <div class="header-content">
             <div>
-                <h1>Open Sauce 2024</h1>
+                <h1>Open Sauce 2025</h1>
                 <p>Conference Schedule</p>
             </div>
-            <button class="download-btn" onclick="downloadICS()" aria-label="Download schedule as ICS calendar file">
-                📅 Download ICS
-            </button>
         </div>
     </header>
 
@@ -359,6 +364,7 @@
         async function loadSchedule() {
             try {
                 const response = await fetch('https://raw.githubusercontent.com/johnmog/johnmog.github.io/main/schedule.json');
+                
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -393,8 +399,11 @@
             const categoryClass = `category-${event.category.toLowerCase().replace(/\s+/g, '-')}`;
             const speaker = event.speaker ? `<span class="event-speaker">${event.speaker}</span>` : '';
             
+            // Create a unique ID for this event to store the data
+            const eventId = `event-${event.day.toLowerCase()}-${event.title.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}`;
+            
             return `
-                <article class="event ${categoryClass}" role="article">
+                <article class="event ${categoryClass}" role="article" data-event='${JSON.stringify(event)}'>
                     <h3 class="event-title">${event.title}</h3>
                     <div class="event-meta">
                         <span class="event-time">${event.time}</span>
@@ -403,6 +412,9 @@
                         ${speaker}
                     </div>
                     <p class="event-description">${event.description}</p>
+                    <button class="download-btn" onclick="downloadEventICSFromElement(this)" aria-label="Download ${event.title} as ICS calendar file">
+                        📅 Download ICS
+                    </button>
                 </article>
             `;
         }
@@ -465,74 +477,90 @@
             }
         });
 
-        // Generate ICS file
-        function downloadICS() {
-            if (!scheduleData) {
-                alert('Schedule data not loaded yet. Please wait a moment and try again.');
-                return;
-            }
-
-            const icsContent = generateICS();
+        // Download ICS for a specific event from DOM element
+        function downloadEventICSFromElement(button) {
+            const eventElement = button.closest('.event');
+            const eventData = JSON.parse(eventElement.dataset.event);
+            
+            const icsContent = generateEventICS(
+                eventData.day, 
+                eventData.title, 
+                eventData.time, 
+                eventData.location, 
+                eventData.category, 
+                eventData.description, 
+                eventData.speaker || ''
+            );
+            
             const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
             const url = URL.createObjectURL(blob);
             
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'open-sauce-2024-schedule.ics';
+            a.download = `${eventData.title.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}.ics`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
 
-        // Generate ICS content
-        function generateICS() {
-            const now = new Date();
-            const uid = now.getTime();
+        // Download ICS for a specific event
+        function downloadEventICS(day, title, time, location, category, description, speaker) {
+            const icsContent = generateEventICS(day, title, time, location, category, description, speaker);
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
             
-            let ics = [
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${title.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}.ics`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Generate ICS content for a single event
+        function generateEventICS(day, title, time, location, category, description, speaker) {
+            const now = new Date();
+            const timestamp = now.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+            
+            // Get event date and time
+            const { start, end } = getEventDate(day, time);
+            if (!start || !end) {
+                alert('Unable to generate calendar event - invalid time format');
+                return '';
+            }
+            
+            const uid = `${day}-${title.replace(/\s+/g, '-').toLowerCase()}@opensauce.com`;
+            const speakerText = speaker ? `\nSpeaker: ${speaker}` : '';
+            
+            const ics = [
                 'BEGIN:VCALENDAR',
                 'VERSION:2.0',
-                'PRODID:-//Open Sauce 2024//Conference Schedule//EN',
-                'CALSCALE:GREGORIAN',
-                'METHOD:PUBLISH',
-                `X-WR-CALNAME:${scheduleData.event}`,
-                'X-WR-TIMEZONE:America/Los_Angeles'
+                'PRODID:-//Open Sauce 2025//Conference Schedule//EN',
+                'BEGIN:VEVENT',
+                `UID:${uid}`,
+                `DTSTAMP:${timestamp}`,
+                `DTSTART:${start}`,
+                `DTEND:${end}`,
+                `SUMMARY:${title}`,
+                `DESCRIPTION:${description}${speakerText}\\nCategory: ${category}`,
+                `LOCATION:${location}`,
+                'END:VEVENT',
+                'END:VCALENDAR'
             ];
-
-            // Add events for each day
-            Object.entries(scheduleData.days).forEach(([dayName, events]) => {
-                events.forEach(event => {
-                    const eventDate = getEventDate(dayName, event.time);
-                    if (eventDate.start && eventDate.end) {
-                        ics.push('BEGIN:VEVENT');
-                        ics.push(`UID:${uid}-${dayName}-${event.title.replace(/\s+/g, '-').toLowerCase()}`);
-                        ics.push(`DTSTART:${eventDate.start}`);
-                        ics.push(`DTEND:${eventDate.end}`);
-                        ics.push(`SUMMARY:${event.title}`);
-                        ics.push(`DESCRIPTION:${event.description}`);
-                        ics.push(`LOCATION:${event.location}`);
-                        ics.push(`CATEGORIES:${event.category}`);
-                        if (event.speaker) {
-                            ics.push(`ORGANIZER:CN=${event.speaker}`);
-                        }
-                        ics.push('END:VEVENT');
-                    }
-                });
-            });
-
-            ics.push('END:VCALENDAR');
+            
             return ics.join('\r\n');
         }
 
-        // Convert event time to ICS format (assumes 2024 dates)
+        // Convert event time to ICS format
         function getEventDate(dayName, timeString) {
             // This is a simplified date conversion for demo purposes
             // In a real application, you'd want actual dates from the schedule data
             const dayMap = {
-                'Friday': '20241115',
-                'Saturday': '20241116', 
-                'Sunday': '20241117'
+                'Friday': '20250718',
+                'Saturday': '20250719', 
+                'Sunday': '20250720'
             };
             
             const baseDate = dayMap[dayName];
