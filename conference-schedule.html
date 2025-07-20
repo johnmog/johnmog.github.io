@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Sauce 2024 Conference Schedule</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .download-btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .download-btn:hover,
+        .download-btn:focus {
+            background-color: #c0392b;
+            outline: 2px solid #fff;
+            outline-offset: 2px;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 15px 20px;
+            background-color: #ecf0f1;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            border-right: 1px solid #bdc3c7;
+        }
+
+        .tab-button:last-child {
+            border-right: none;
+        }
+
+        .tab-button:hover {
+            background-color: #d5dbdb;
+        }
+
+        .tab-button:focus {
+            outline: 2px solid #3498db;
+            outline-offset: -2px;
+        }
+
+        .tab-button.active {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .day-header {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+        }
+
+        .event {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #fafafa;
+            transition: box-shadow 0.3s;
+        }
+
+        .event:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .event-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .event-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .event-time,
+        .event-location,
+        .event-category,
+        .event-speaker {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #555;
+        }
+
+        .event-time::before {
+            content: "🕒";
+        }
+
+        .event-location::before {
+            content: "📍";
+        }
+
+        .event-category::before {
+            content: "🏷️";
+        }
+
+        .event-speaker::before {
+            content: "👤";
+        }
+
+        .event-description {
+            color: #666;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+
+        .category-workshop { border-left: 4px solid #e74c3c; }
+        .category-keynote { border-left: 4px solid #f39c12; }
+        .category-panel { border-left: 4px solid #9b59b6; }
+        .category-presentation { border-left: 4px solid #3498db; }
+        .category-showcase { border-left: 4px solid #2ecc71; }
+        .category-break { border-left: 4px solid #95a5a6; }
+        .category-networking { border-left: 4px solid #1abc9c; }
+        .category-session { border-left: 4px solid #34495e; }
+        .category-social { border-left: 4px solid #e67e22; }
+        .category-energizer { border-left: 4px solid #f1c40f; }
+        .category-collaboration { border-left: 4px solid #8e44ad; }
+        .category-competition { border-left: 4px solid #c0392b; }
+        .category-ceremony { border-left: 4px solid #27ae60; }
+        .category-registration { border-left: 4px solid #7f8c8d; }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .error {
+            background-color: #e74c3c;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .tab-button {
+                border-right: none;
+                border-bottom: 1px solid #bdc3c7;
+            }
+
+            .tab-button:last-child {
+                border-bottom: none;
+            }
+
+            .tab-content {
+                padding: 20px;
+            }
+
+            .event-meta {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .container {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .event {
+                padding: 15px;
+            }
+
+            .event-title {
+                font-size: 1.1rem;
+            }
+
+            .day-header {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .event {
+                border: 2px solid #000;
+            }
+            
+            .tab-button:focus {
+                outline: 3px solid #000;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .tabs,
+            .download-btn {
+                display: none;
+            }
+            
+            .tab-content {
+                display: block !important;
+                page-break-after: always;
+            }
+            
+            .tab-content:last-child {
+                page-break-after: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div>
+                <h1>Open Sauce 2024</h1>
+                <p>Conference Schedule</p>
+            </div>
+            <button class="download-btn" onclick="downloadICS()" aria-label="Download schedule as ICS calendar file">
+                📅 Download ICS
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="loading" id="loading" aria-live="polite">
+            Loading schedule...
+        </div>
+
+        <div id="schedule-content" style="display: none;">
+            <nav class="tabs" role="tablist" aria-label="Conference days">
+                <button class="tab-button active" role="tab" aria-selected="true" aria-controls="friday-content" id="friday-tab" onclick="showTab('friday')">
+                    Friday
+                </button>
+                <button class="tab-button" role="tab" aria-selected="false" aria-controls="saturday-content" id="saturday-tab" onclick="showTab('saturday')">
+                    Saturday
+                </button>
+                <button class="tab-button" role="tab" aria-selected="false" aria-controls="sunday-content" id="sunday-tab" onclick="showTab('sunday')">
+                    Sunday
+                </button>
+            </nav>
+
+            <div class="tab-content active" role="tabpanel" aria-labelledby="friday-tab" id="friday-content">
+                <h2 class="day-header">Friday</h2>
+                <div id="friday-events"></div>
+            </div>
+
+            <div class="tab-content" role="tabpanel" aria-labelledby="saturday-tab" id="saturday-content">
+                <h2 class="day-header">Saturday</h2>
+                <div id="saturday-events"></div>
+            </div>
+
+            <div class="tab-content" role="tabpanel" aria-labelledby="sunday-tab" id="sunday-content">
+                <h2 class="day-header">Sunday</h2>
+                <div id="sunday-events"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let scheduleData = null;
+
+        // Load schedule data
+        async function loadSchedule() {
+            try {
+                const response = await fetch('./schedule.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                scheduleData = await response.json();
+                renderSchedule();
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('schedule-content').style.display = 'block';
+            } catch (error) {
+                console.error('Error loading schedule:', error);
+                showError('Failed to load schedule data. Please try again later.');
+            }
+        }
+
+        // Show error message
+        function showError(message) {
+            const loading = document.getElementById('loading');
+            loading.innerHTML = `<div class="error">${message}</div>`;
+        }
+
+        // Render schedule for all days
+        function renderSchedule() {
+            const days = ['friday', 'saturday', 'sunday'];
+            days.forEach(day => {
+                const dayData = scheduleData.days[day.charAt(0).toUpperCase() + day.slice(1)];
+                const container = document.getElementById(`${day}-events`);
+                container.innerHTML = dayData.map(event => createEventHTML(event)).join('');
+            });
+        }
+
+        // Create HTML for a single event
+        function createEventHTML(event) {
+            const categoryClass = `category-${event.category.toLowerCase().replace(/\s+/g, '-')}`;
+            const speaker = event.speaker ? `<span class="event-speaker">${event.speaker}</span>` : '';
+            
+            return `
+                <article class="event ${categoryClass}" role="article">
+                    <h3 class="event-title">${event.title}</h3>
+                    <div class="event-meta">
+                        <span class="event-time">${event.time}</span>
+                        <span class="event-location">${event.location}</span>
+                        <span class="event-category">${event.category}</span>
+                        ${speaker}
+                    </div>
+                    <p class="event-description">${event.description}</p>
+                </article>
+            `;
+        }
+
+        // Tab navigation
+        function showTab(day) {
+            // Hide all tabs and content
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-selected', 'false');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Show selected tab and content
+            const tabButton = document.getElementById(`${day}-tab`);
+            const tabContent = document.getElementById(`${day}-content`);
+            
+            tabButton.classList.add('active');
+            tabButton.setAttribute('aria-selected', 'true');
+            tabContent.classList.add('active');
+
+            // Focus management for accessibility
+            tabContent.focus();
+        }
+
+        // Keyboard navigation for tabs
+        document.addEventListener('keydown', function(e) {
+            if (e.target.classList.contains('tab-button')) {
+                const tabs = Array.from(document.querySelectorAll('.tab-button'));
+                const currentIndex = tabs.indexOf(e.target);
+                let newIndex;
+
+                switch(e.key) {
+                    case 'ArrowLeft':
+                        e.preventDefault();
+                        newIndex = currentIndex > 0 ? currentIndex - 1 : tabs.length - 1;
+                        tabs[newIndex].focus();
+                        break;
+                    case 'ArrowRight':
+                        e.preventDefault();
+                        newIndex = currentIndex < tabs.length - 1 ? currentIndex + 1 : 0;
+                        tabs[newIndex].focus();
+                        break;
+                    case 'Home':
+                        e.preventDefault();
+                        tabs[0].focus();
+                        break;
+                    case 'End':
+                        e.preventDefault();
+                        tabs[tabs.length - 1].focus();
+                        break;
+                    case 'Enter':
+                    case ' ':
+                        e.preventDefault();
+                        e.target.click();
+                        break;
+                }
+            }
+        });
+
+        // Generate ICS file
+        function downloadICS() {
+            if (!scheduleData) {
+                alert('Schedule data not loaded yet. Please wait a moment and try again.');
+                return;
+            }
+
+            const icsContent = generateICS();
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'open-sauce-2024-schedule.ics';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Generate ICS content
+        function generateICS() {
+            const now = new Date();
+            const uid = now.getTime();
+            
+            let ics = [
+                'BEGIN:VCALENDAR',
+                'VERSION:2.0',
+                'PRODID:-//Open Sauce 2024//Conference Schedule//EN',
+                'CALSCALE:GREGORIAN',
+                'METHOD:PUBLISH',
+                `X-WR-CALNAME:${scheduleData.event}`,
+                'X-WR-TIMEZONE:America/Los_Angeles'
+            ];
+
+            // Add events for each day
+            Object.entries(scheduleData.days).forEach(([dayName, events]) => {
+                events.forEach(event => {
+                    const eventDate = getEventDate(dayName, event.time);
+                    if (eventDate.start && eventDate.end) {
+                        ics.push('BEGIN:VEVENT');
+                        ics.push(`UID:${uid}-${dayName}-${event.title.replace(/\s+/g, '-').toLowerCase()}`);
+                        ics.push(`DTSTART:${eventDate.start}`);
+                        ics.push(`DTEND:${eventDate.end}`);
+                        ics.push(`SUMMARY:${event.title}`);
+                        ics.push(`DESCRIPTION:${event.description}`);
+                        ics.push(`LOCATION:${event.location}`);
+                        ics.push(`CATEGORIES:${event.category}`);
+                        if (event.speaker) {
+                            ics.push(`ORGANIZER:CN=${event.speaker}`);
+                        }
+                        ics.push('END:VEVENT');
+                    }
+                });
+            });
+
+            ics.push('END:VCALENDAR');
+            return ics.join('\r\n');
+        }
+
+        // Convert event time to ICS format (assumes 2024 dates)
+        function getEventDate(dayName, timeString) {
+            // This is a simplified date conversion for demo purposes
+            // In a real application, you'd want actual dates from the schedule data
+            const dayMap = {
+                'Friday': '20241115',
+                'Saturday': '20241116', 
+                'Sunday': '20241117'
+            };
+            
+            const baseDate = dayMap[dayName];
+            if (!baseDate) return { start: null, end: null };
+            
+            const timeMatch = timeString.match(/(\d{2}):(\d{2})\s*-\s*(\d{2}):(\d{2})/);
+            if (!timeMatch) return { start: null, end: null };
+            
+            const [, startHour, startMin, endHour, endMin] = timeMatch;
+            
+            return {
+                start: `${baseDate}T${startHour}${startMin}00`,
+                end: `${baseDate}T${endHour}${endMin}00`
+            };
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', loadSchedule);
+    </script>
+</body>
+</html>
