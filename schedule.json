@@ -1,0 +1,190 @@
+{
+  "lastUpdated": "2025-07-18T10:11:49.368Z",
+  "event": "Open Sauce 2025",
+  "url": "https://opensauce.com/agenda/",
+  "days": {
+    "Friday": [
+      {
+        "title": "Registration & Check-in",
+        "time": "09:00 - 10:00",
+        "description": "Event registration and welcome packet pickup",
+        "location": "Main Lobby",
+        "day": "Friday",
+        "category": "Registration"
+      },
+      {
+        "title": "Opening Keynote",
+        "time": "10:00 - 11:00",
+        "description": "Welcome to Open Sauce 2025 - Setting the stage for an incredible weekend of making, learning, and innovation",
+        "speaker": "Event Organizers",
+        "location": "Main Stage",
+        "day": "Friday",
+        "category": "Keynote"
+      },
+      {
+        "title": "Maker Workshop: Electronics Basics",
+        "time": "11:30 - 13:00",
+        "description": "Learn the fundamentals of electronics and circuit building. Hands-on workshop covering resistors, capacitors, LEDs, and basic circuit design principles.",
+        "speaker": "Electronics Team",
+        "location": "Workshop Room A",
+        "day": "Friday",
+        "category": "Workshop"
+      },
+      {
+        "title": "Lunch Break",
+        "time": "13:00 - 14:00",
+        "description": "Networking lunch with fellow makers and innovators. Food trucks and catering available on-site.",
+        "location": "Food Court",
+        "day": "Friday",
+        "category": "Break"
+      },
+      {
+        "title": "3D Printing Showcase",
+        "time": "14:00 - 15:30",
+        "description": "Latest innovations in 3D printing technology. See cutting-edge printers, materials, and techniques in action.",
+        "speaker": "3D Printing Experts",
+        "location": "Exhibition Hall",
+        "day": "Friday",
+        "category": "Showcase"
+      },
+      {
+        "title": "Open Source Hardware Panel",
+        "time": "16:00 - 17:00",
+        "description": "Panel discussion on the future of open source hardware, featuring industry leaders and community advocates.",
+        "speaker": "Industry Leaders",
+        "location": "Panel Room",
+        "day": "Friday",
+        "category": "Panel"
+      },
+      {
+        "title": "Lightning Talks",
+        "time": "17:30 - 18:30",
+        "description": "Quick 5-minute presentations from community members sharing their latest projects and ideas.",
+        "location": "Main Stage",
+        "day": "Friday",
+        "category": "Presentation"
+      }
+    ],
+    "Saturday": [
+      {
+        "title": "Coffee & Morning Networking",
+        "time": "08:30 - 09:00",
+        "description": "Start your day with coffee and connect with fellow attendees before the sessions begin.",
+        "location": "Main Lobby",
+        "day": "Saturday",
+        "category": "Networking"
+      },
+      {
+        "title": "Robotics Workshop",
+        "time": "09:00 - 10:30",
+        "description": "Build and program your own robot using Arduino and sensors. Learn about motor control, sensor integration, and basic AI concepts.",
+        "speaker": "Robotics Team",
+        "location": "Workshop Room B",
+        "day": "Saturday",
+        "category": "Workshop"
+      },
+      {
+        "title": "Maker Showcase Presentations",
+        "time": "11:00 - 12:30",
+        "description": "Makers present their latest projects to the community. See innovative solutions, creative builds, and inspiring stories.",
+        "location": "Main Stage",
+        "day": "Saturday",
+        "category": "Presentation"
+      },
+      {
+        "title": "Lunch & Networking",
+        "time": "12:30 - 13:30",
+        "description": "Connect with other makers and innovators over lunch. Perfect time to discuss potential collaborations.",
+        "location": "Food Court",
+        "day": "Saturday",
+        "category": "Break"
+      },
+      {
+        "title": "IoT Development Session",
+        "time": "14:00 - 15:30",
+        "description": "Internet of Things development and best practices. Learn about connectivity, data collection, and cloud integration.",
+        "speaker": "IoT Specialists",
+        "location": "Tech Lab",
+        "day": "Saturday",
+        "category": "Session"
+      },
+      {
+        "title": "Sustainability in Making",
+        "time": "16:00 - 17:00",
+        "description": "Eco-friendly approaches to maker projects. Discussion on sustainable materials, energy efficiency, and responsible making.",
+        "speaker": "Sustainability Advocates",
+        "location": "Green Room",
+        "day": "Saturday",
+        "category": "Workshop"
+      },
+      {
+        "title": "Evening Social",
+        "time": "18:00 - 20:00",
+        "description": "Casual networking and refreshments. Live music, games, and plenty of opportunities to connect with the community.",
+        "location": "Outdoor Patio",
+        "day": "Saturday",
+        "category": "Social"
+      }
+    ],
+    "Sunday": [
+      {
+        "title": "Morning Energizer",
+        "time": "09:00 - 09:30",
+        "description": "Quick morning session to energize and prepare for the final day of activities.",
+        "location": "Main Stage",
+        "day": "Sunday",
+        "category": "Energizer"
+      },
+      {
+        "title": "AI & Machine Learning Workshop",
+        "time": "09:30 - 11:00",
+        "description": "Introduction to AI applications in maker projects. Learn about computer vision, machine learning models, and practical implementations.",
+        "speaker": "AI Research Team",
+        "location": "Computer Lab",
+        "day": "Sunday",
+        "category": "Workshop"
+      },
+      {
+        "title": "Community Project Collaboration",
+        "time": "11:30 - 13:00",
+        "description": "Work together on community-driven projects. Join teams working on open source initiatives and collaborative builds.",
+        "location": "Collaboration Space",
+        "day": "Sunday",
+        "category": "Collaboration"
+      },
+      {
+        "title": "Lunch & Final Networking",
+        "time": "13:00 - 14:00",
+        "description": "Last chance to connect with fellow attendees and exchange contact information for future collaborations.",
+        "location": "Food Court",
+        "day": "Sunday",
+        "category": "Break"
+      },
+      {
+        "title": "Project Demos & Competition",
+        "time": "14:00 - 14:30",
+        "description": "Final demonstrations of projects built during the event. Community voting for favorite projects.",
+        "location": "Main Stage",
+        "day": "Sunday",
+        "category": "Competition"
+      },
+      {
+        "title": "Closing Ceremony & Awards",
+        "time": "14:30 - 15:30",
+        "description": "Recognition of outstanding projects and achievements. Awards ceremony and closing remarks from organizers.",
+        "speaker": "Event Organizers",
+        "location": "Main Stage",
+        "day": "Sunday",
+        "category": "Ceremony"
+      },
+      {
+        "title": "Final Showcase & Wrap-up",
+        "time": "15:30 - 16:30",
+        "description": "Final project demonstrations and event conclusion. Thank you messages and information about future events.",
+        "location": "Main Stage",
+        "day": "Sunday",
+        "category": "Showcase"
+      }
+    ]
+  }
+}
